@@ -1,9 +1,14 @@
 {
 	"name": "Stream Manager",
 	"version": "1.0",
-	"manifest_version": 3,
+	"manifest_version": 2,
 	"background": {
 		"service_worker": "background.js"
 	},
-	"permissions": ["storage","tabs", "activeTab", "scripting"]
+	"permissions": [
+		"storage",
+		"http://*/*",
+		"https://*/*",
+		"tabs"
+	]
 }
