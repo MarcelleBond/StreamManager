@@ -5,10 +5,25 @@
 	"background": {
 		"service_worker": "background.js"
 	},
+	"content_scripts": [
+		// {
+		// 	"matches": [
+		// 		"https://*.spotify.com/*"
+		// 	],
+		// 	"js": ["spotify.js"]
+		// },
+		{
+			"matches": [
+				"https://www.deezer.com/*"
+			],
+			"js": ["deezer.js"]
+		}
+	],
 	"permissions": [
 		"storage",
-		"http://*/*",
-		"https://*/*",
-		"tabs"
+		"http://localhost:5000/",
+		"https://localhost:5001/",
+		"tabs",
+		"activeTab"
 	]
 }
