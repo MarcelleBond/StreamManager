@@ -1,7 +1,7 @@
 {
 	"name": "Stream Manager",
 	"version": "1.0",
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"background": {
 		"service_worker": "background.js"
 	},
@@ -25,10 +25,13 @@
 	],
 	"permissions": [
 		"storage",
-		"https://night-shadow.eastus.cloudapp.azure.com/",
+
 		"tabs"
 	],
-	"browser_action": {
+	"host_permissions": [
+		"https://night-shadow.eastus.cloudapp.azure.com/*"
+	],
+	"action": {
 		"default_icon": {
 			"16": "icon16.png",
 			"24": "icon24.png",
