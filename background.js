@@ -1,22 +1,17 @@
-const getUser = `https://localhost:5001/api/test/getUsers`
-const getSongs = `https://localhost:5001/api/test/getSongs`
+const getUser = `https://night-shadow.eastus.cloudapp.azure.com/api/test/getUsers`
+const getSongs = `https://night-shadow.eastus.cloudapp.azure.com/api/test/getSongs`
 const userdata = {
 	username: "",
 	password: "",
-	playList: [{ url: "", time: "", played: false }],
+	playList: [{ name: "", url: "", time: "", played: false }],
 	valid: false
 }
 
-
-/*
-* get username and password
-*		# make http request to the server to collect the username and password for one account
-*		# store username and password in local storage
-*/
-
-chrome.runtime.onInstalled.addListener(() => {
+console.log("Hellow world")
+if (userdata.username === "")
 	getUsername()
-})
+else
+	setupStreams()
 
 function setupStreams() {
 	userdata.playList.forEach(el => {
@@ -31,7 +26,7 @@ function setupStreams() {
 	})
 }
 
-function getUsername() {
+function getCachedData() {
 
 	let noCache = true
 	console.log("noCache: ", noCache)
@@ -47,44 +42,33 @@ function getUsername() {
 	})
 
 	if (noCache) {
-		console.log("checking outside if no cache")
-		fetch(getUser).then(response => response.json())
-			.then(data => {
-				// console.log("response from get user",data)
-				Object.assign(userdata, data)
-				chrome.storage.sync.set({ "dockeruser": userdata })
-				// console.log("Userdata after getting user name and password",userdata)
-				getSongList()
-			}).catch((err) => {
-
-				console.log(err)
-			})
+		getUsername()
 	}
 }
 
-function getSongList() {
-	fetch(getSongs).then(response => response.json())
+function getUsername() {
+	fetch(getUser).then(response => response.json())
 		.then(data => {
-			// console.log("response from get songs",data)
+			console.log("response from get user", data)
 			Object.assign(userdata, data)
-			chrome.storage.sync.set({ dockeruser: userdata })
-			// console.log("Userdata after getting somgs: ",userdata)
-			// setupStreams()
+			chrome.storage.sync.set({ "dockeruser": userdata })
+			console.log("Userdata after getting user name and password", userdata)
+			getSongList()
 		}).catch((err) => {
 
 			console.log(err)
 		})
 }
 
-// pick random times to play song on url
+function getSongList() {
+	fetch(getSongs).then(response => response.json())
+		.then(data => {
+			Object.assign(userdata, data)
+			chrome.storage.sync.set({ "dockeruser": userdata })
+			setupStreams()
+		}).catch((err) => {
 
-// test = document.querySelectorAll('[data-testid="play-button"]') play song
+			console.log(err)
+		})
+}
 
-
-// check if the user is logged in
-
-// stream 6 times a day on each link
-
-// keep track of streams
-
-// click play when opening up platform

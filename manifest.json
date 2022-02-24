@@ -6,24 +6,34 @@
 		"service_worker": "background.js"
 	},
 	"content_scripts": [
-		// {
-		// 	"matches": [
-		// 		"https://*.spotify.com/*"
-		// 	],
-		// 	"js": ["spotify.js"]
-		// },
+		{
+			"matches": [
+				"https://*.spotify.com/*"
+			],
+			"js": [
+				"spotify.js"
+			]
+		},
 		{
 			"matches": [
 				"https://www.deezer.com/*"
 			],
-			"js": ["deezer.js"]
+			"js": [
+				"deezer.js"
+			]
 		}
 	],
 	"permissions": [
 		"storage",
-		"http://localhost:5000/",
-		"https://localhost:5001/",
-		"tabs",
-		"activeTab"
-	]
+		"https://night-shadow.eastus.cloudapp.azure.com/",
+		"tabs"
+	],
+	"browser_action": {
+		"default_icon": {
+			"16": "icon16.png",
+			"24": "icon24.png",
+			"32": "icon32.png"
+		},
+		"default_title": "Stream Manager"
+	}
 }
