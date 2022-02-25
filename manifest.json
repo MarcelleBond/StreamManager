@@ -24,9 +24,7 @@
 		}
 	],
 	"permissions": [
-		"storage",
-
-		"tabs"
+		"storage"
 	],
 	"host_permissions": [
 		"https://night-shadow.eastus.cloudapp.azure.com/*"
