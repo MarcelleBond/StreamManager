@@ -1,11 +1,5 @@
 
-const userdata = {
-	username: "",
-	password: "",
-	playList: [{ url: "", time: "", played: false }],
-	valid: false
-}
-var playBtn= null
+var playBtn = null
 var playing = false
 
 var homeLoginBtn = document.querySelectorAll('[data-testid="login-button"]')
@@ -13,8 +7,6 @@ var loginUsername = document.getElementById('login-username')
 var loginPassword = document.getElementById('login-password')
 var loginButton = document.getElementById('login-button')
 var checkBox = document.getElementById("login-remember")
-// var advert = document.querySelectorAll('[data-testid="now-playing-widget"]')
-// var advert = document.querySelectorAll('[aria-label="Advertisement]')
 
 if (homeLoginBtn.length > 0) {
 	homeLoginBtn[0].click()
@@ -27,7 +19,6 @@ startSong()
 function checkLogin() {
 	if (loginButton != null) {
 		chrome.storage.sync.get("dockeruser", ({ dockeruser }) => {
-			console.log("checking outside if:", dockeruser)
 			if (dockeruser) {
 
 				const { username, password } = dockeruser
@@ -55,11 +46,13 @@ async function startSong() {
 	var body = new MutationObserver(async function (mutations, me) {
 		playBtn = document.querySelectorAll('[data-testid="play-button"]')[1]
 		if (playBtn && !playing) {
+			console.log("playing song")
+			me.disconnect() // stop observing
 			playing = true
 			await sleep(2000)
 			playBtn.click()
-			me.disconnect() // stop observing
-			return
+			await sleep(3000)
+			switchToPlaylist()
 		}
 	})
 
@@ -67,6 +60,21 @@ async function startSong() {
 		childList: true,
 		subtree: true
 	})
+}
+
+function switchToPlaylist() {
+	if (location.href == "https://open.spotify.com/playlist/37i9dQZF1DWUoBHp4pr8cg")
+		return
+	var playbackPosition = document.querySelector('[data-testid="playback-position"]')
+	console.log(playbackPosition.innerHTML)
+	playbackPosition.addEventListener('DOMSubtreeModified', () => {
+		var whatsPlaying = document.querySelector('[data-testid="now-playing-widget"]')
+		var playbackDuration = document.querySelector('[data-testid="playback-duration"]')
+		if (playbackDuration.innerHTML == playbackPosition.innerHTML && whatsPlaying.getAttribute("aria-label").toLowerCase().indexOf("advertisement") == -1)
+			location.href = "https://open.spotify.com/playlist/37i9dQZF1DWUoBHp4pr8cg"
+	})
+
+
 }
 
 function sleep(ms) {

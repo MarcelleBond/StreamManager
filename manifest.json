@@ -21,13 +21,23 @@
 			"js": [
 				"deezer.js"
 			]
+		},
+		{
+			"matches": [
+				"https://www.pandora.com/*"
+			],
+			"js": [
+				"pandora.js"
+			]
 		}
 	],
 	"permissions": [
-		"storage"
+		"storage",
+		"tabs"
 	],
 	"host_permissions": [
-		"https://night-shadow.eastus.cloudapp.azure.com/*"
+		"https://night-shadow.eastus.cloudapp.azure.com/*",
+		"https://localhost:5001/*"
 	],
 	"action": {
 		"default_icon": {
