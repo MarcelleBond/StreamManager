@@ -1,9 +1,9 @@
 /// <reference path="chrome.intellisense.js" />
 
-/* const getUser = `https://night-shadow.eastus.cloudapp.azure.com/api/agents/GetCredential`
-const getSongs = `https://night-shadow.eastus.cloudapp.azure.com/api/agents/GetPlaylist` */
-const getUser = `https://localhost:5001/api/test/getusers`
-const getSongs = `https://localhost:5001/api/test/GetSongs`
+const getUser = `https://night-shadow.eastus.cloudapp.azure.com/api/agents/GetCredential`
+const getSongs = `https://night-shadow.eastus.cloudapp.azure.com/api/agents/GetPlaylist`
+/* const getUser = `https://localhost:5001/api/test/getusers`
+const getSongs = `https://localhost:5001/api/test/GetSongs` */
 const tabUrls = ["spotify", "deezer", "pandora"];
 const userdata = {
 	username: "",
