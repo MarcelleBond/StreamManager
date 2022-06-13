@@ -95,13 +95,15 @@ async function Login(username, password) {
 
 async function PlaySong() {
 	var body = new MutationObserver(async function (mutations, me) {
-		var profile = document.querySelector("body > div.Container > div > div.region-topBar.region-topBar--searchT3 > div.Nav.Nav--lightTheme.Nav--standard.Nav--rightRail > ul > li.NavSecondary__item.NavSecondary__last > button")
-		var PlayBtn = document.querySelector("body > div.Container > div > main > div > div > div.BackstageLayout__body > aside > div > div.BackstageLayout__body__sidebar__buttons > div > div > div:nth-child(2) > button")
-		var pauseBt = document.querySelector("body > div.Container > div > main > div > div > div.BackstageLayout__body > aside > div > div.BackstageLayout__body__sidebar__buttons > div > div > div:nth-child(3) > button")
+		
+		var profile = document.querySelector('[data-qa="header_profile_image"]')
+		var PlayBtn = document.getElementsByClassName("ButtonRow__button ButtonRow__button--play")[0]
+		console.log("wating for play Btn: ", PlayBtn)
 		if (profile != null && PlayBtn != null) {
+			console.log("We in")
 			me.disconnect()
 			PlayBtn.click()
-			await sleep(15000)
+			await sleep(30000)
 			var div = document.querySelector("#region-coachmark")
 			var iframe = div.querySelector('iframe')
 			console.log(iframe)
@@ -111,8 +113,8 @@ async function PlaySong() {
 				console.log("clicking rewardBtn")
 				RewardBtn.click()
 			}
-
-			await sleep(20000)
+			console.log("Waiting for 2 minutes")
+			await sleep(1200000)
 			var timer = document.querySelector("body > div.Container > div > div.region-bottomBar > nav > div.Tuner__ContentWrapper.Tuner__ContentWrapper--withTrackDetails > div.Tuner__VolumeDurationControl > div > div.Duration.VolumeDurationControl__Duration")
 			while (timer == null) {
 				console.log("clicking play")
@@ -120,7 +122,13 @@ async function PlaySong() {
 				await sleep(5000)
 				timer = document.querySelector("body > div.Container > div > div.region-bottomBar > nav > div.Tuner__ContentWrapper.Tuner__ContentWrapper--withTrackDetails > div.Tuner__VolumeDurationControl > div > div.Duration.VolumeDurationControl__Duration")
 			}
-
+			var inPlayList = localStorage.getItem("inPlayList")
+			console.log("Playlist check beforec switch: ",inPlayList)
+			if(inPlayList == "yes"){
+				localStorage.setItem("inPlayList", "no")
+				return
+			}
+			switchToPlaylist()
 		}
 
 	})
@@ -131,6 +139,22 @@ async function PlaySong() {
 	})
 
 }
+
+function switchToPlaylist() {
+	var playbackPosition = document.querySelector("body > div.Container > div > div.region-bottomBar > nav > div.Tuner__ContentWrapper.Tuner__ContentWrapper--withTrackDetails > div.Tuner__VolumeDurationControl > div > div.Duration.VolumeDurationControl__Duration > span:nth-child(1)")
+	console.log(playbackPosition.innerHTML)
+	playbackPosition.addEventListener('DOMSubtreeModified', () => {
+		var playbackDuration = document.querySelector("body > div.Container > div > div.region-bottomBar > nav > div.Tuner__ContentWrapper.Tuner__ContentWrapper--withTrackDetails > div.Tuner__VolumeDurationControl > div > div.Duration.VolumeDurationControl__Duration > span:nth-child(3)")
+		if (playbackDuration.innerHTML == playbackPosition.innerHTML /* && whatsPlaying.getAttribute("aria-label").toLowerCase().indexOf("advertisement") == -1 */) {
+			localStorage.setItem("inPlayList", "yes")
+			var inPlayList = localStorage.getItem("inPlayList")
+			console.log("Playlist check after switch: ",inPlayList)
+			
+			location.href = "https://pandora.app.link/gWzA0v2vPqb"
+		}
+	})
+}
+
 
 
 function sleep(ms) {

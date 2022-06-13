@@ -49,9 +49,10 @@ async function startSong() {
 			console.log("playing song")
 			me.disconnect() // stop observing
 			playing = true
-			await sleep(2000)
+			await sleep(5000)
 			playBtn.click()
-			await sleep(3000)
+			console.log("clicked play")
+			await sleep(5000)
 			switchToPlaylist()
 		}
 	})
@@ -73,8 +74,6 @@ function switchToPlaylist() {
 		if (playbackDuration.innerHTML == playbackPosition.innerHTML && whatsPlaying.getAttribute("aria-label").toLowerCase().indexOf("advertisement") == -1)
 			location.href = "https://open.spotify.com/playlist/37i9dQZF1DWUoBHp4pr8cg"
 	})
-
-
 }
 
 function sleep(ms) {
