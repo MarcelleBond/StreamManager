@@ -1,4 +1,4 @@
-/// <reference path="chrome.intellisense.js" />
+
 
 const getUser = `https://night-shadow.eastus.cloudapp.azure.com/api/agents/GetCredential`
 const getSongs = `https://night-shadow.eastus.cloudapp.azure.com/api/agents/GetPlaylist`
